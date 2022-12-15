@@ -87,7 +87,7 @@ export const updateNameSurname = async (req, res) => {
     });
 };
 
-// update contact number 
+// update contact number
 export const updateContact = async (req, res) => {
     const { id } = req.params;
     const { contact } = req.body;
@@ -104,21 +104,15 @@ export const updateContact = async (req, res) => {
         });
     }
 
-    const user2 = await UserModel.findOne({
-        where: {
-            contact: contact,
-        },
-    });
-
-    if (user2) {
+    if (contact.length !== 9) {
         return res.status(400).json({
-            message: "Contact number already exist",
+            message: "Contact number is not valid",
         });
     }
 
-    if (contact.length != 9) {
+    if (contact.substring(0, 2) !== "91" && contact.substring(0, 2) !== "92" && contact.substring(0, 2) !== "93" && contact.substring(0, 2) !== "96") {
         return res.status(400).json({
-            message: "Contact number must have 9 digits",
+            message: "Contact number is not valid",
         });
     }
 
@@ -132,6 +126,54 @@ export const updateContact = async (req, res) => {
 
     return res.status(200).json({
         message: "Contact number updated",
+    });
+};
+
+// update email
+export const updateEmail = async (req, res) => {
+    const { id } = req.params;
+    const { email } = req.body;
+
+    const user = await UserModel.findOne({
+        where: {
+            id: id,
+        },
+    });
+
+    if (!user) {
+        return res.status(404).json({
+            message: "User not found",
+        });
+    }
+
+    const user2 = await UserModel.findOne({
+        where: {
+            email: email,
+        },
+    });
+
+    if (user2) {
+        return res.status(400).json({
+            message: "Email already exist",
+        });
+    }
+
+    if (!email.includes("@") || !email.includes(".")) {
+        return res.status(400).json({
+            message: "Email is not valid",
+        });
+    }
+
+    await UserModel.update({
+        email: email,
+    }, {
+        where: {
+            id: id,
+        },
+    });
+
+    return res.status(200).json({
+        message: "Email updated",
     });
 };
 
@@ -208,6 +250,18 @@ export const createUser = async (req, res) => {
         });
     }
 
+    if (contact.substring(0, 2) != "91" && contact.substring(0, 2) != "92" && contact.substring(0, 2) != "93" && contact.substring(0, 2) != "96") {
+        return res.status(400).json({
+            message: "Contact number is not valid",
+        });
+    }
+
+    if (!email.includes("@") || !email.includes(".")) {
+        return res.status(400).json({
+            message: "Email is not valid",
+        });
+    }
+    
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
 

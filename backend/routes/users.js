@@ -4,7 +4,9 @@ import {
     getAllUsers,
     deleteUser,
     updateUsername,
-    updateNameSurname
+    updateNameSurname,
+    updateContact,
+    updateEmail
 } from "../controllers/users.js";
 
 const userRoutes = Router();
@@ -18,6 +20,10 @@ userRoutes.delete("/deleteUser/:id", deleteUser);
 userRoutes.put("/updateUsername/:id", updateUsername);
 
 userRoutes.put("/updateNameSurname/:id", updateNameSurname);
+
+userRoutes.put("/updateContact/:id", updateContact);
+
+userRoutes.put("/updateEmail/:id", updateEmail);
 
 
 export { userRoutes };
