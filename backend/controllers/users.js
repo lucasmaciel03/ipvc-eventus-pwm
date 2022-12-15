@@ -14,6 +14,33 @@ export const getAllUsers = async (req, res) => {
     });
 };
 
+// delete user by id
+export const deleteUser = async (req, res) => {
+    const { id } = req.params;
+
+    const user
+        = await UserModel.findOne({
+            where: {
+                id: id,
+            },
+        });
+
+    if (!user) {
+        return res.status(404).json({
+            message: "User not found",
+        });
+    }
+
+    await UserModel.destroy({
+        where: {
+            id: id,
+        },
+    });
+
+    return res.status(200).json({
+        message: "User deleted", user, });
+};
+
 // create user
 export const createUser = async (req, res) => {
     const { username, name, surname, email, contact, dateBirth, password } = req.body;
