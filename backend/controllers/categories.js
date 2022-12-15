@@ -1,6 +1,6 @@
 import { CategoryModel } from '../models/categories.js'
 
-// get all categories and dont return id
+// get all categories
 export const getAllCategories = async (req, res) => {
     const categories = await CategoryModel.findAll({
         attributes: {
@@ -13,7 +13,32 @@ export const getAllCategories = async (req, res) => {
     })
 }
 
-// create new category if category name already exist return error
+// get category by name 
+
+export const getCategoryByName = async (req, res) => {
+    const { name } = req.params
+
+    const category = await CategoryModel.findOne({
+        where: {
+            name: name
+        },
+        attributes: {
+            exclude: ['id']
+        }
+    })
+
+    if (!category) {
+        return res.status(404).json({
+            message: 'Category not found'
+        })
+    }
+
+    return res.status(200).json({
+        category
+    })
+}
+
+// create new category 
 export const createCategory = async (req, res) => {
     const { name } = req.body
 
