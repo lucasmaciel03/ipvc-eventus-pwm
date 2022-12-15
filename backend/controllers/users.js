@@ -1,7 +1,7 @@
 import bcrypt from 'bcrypt';
 import { UserModel } from "../models/users.js";
 
-// get all users from table users, dont return password
+// get all users 
 export const getAllUsers = async (req, res) => {
     const users = await UserModel.findAll({
         attributes: {
@@ -11,6 +11,48 @@ export const getAllUsers = async (req, res) => {
 
     return res.status(200).json({
         users,
+    });
+};
+
+// update username
+export const updateUsername = async (req, res) => {
+    const { id } = req.params;
+    const { username } = req.body;
+
+    const user = await UserModel.findOne({
+        where: {
+            id: id,
+        },
+    });
+
+    if (!user) {
+        return res.status(404).json({
+            message: "User not found",
+        });
+    }
+
+    const user2 = await UserModel.findOne({
+        where: {
+            username: username,
+        },
+    });
+
+    if (user2) {
+        return res.status(400).json({
+            message: "Username already exist",
+        });
+    }
+
+    await UserModel.update({
+        username: username,
+    }, {
+        where: {
+            id: id,
+        },
+    });
+
+    return res.status(200).json({
+        message: "Username updated",
     });
 };
 
