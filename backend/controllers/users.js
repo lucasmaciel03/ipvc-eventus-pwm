@@ -87,6 +87,53 @@ export const updateNameSurname = async (req, res) => {
     });
 };
 
+// update contact number 
+export const updateContact = async (req, res) => {
+    const { id } = req.params;
+    const { contact } = req.body;
+
+    const user = await UserModel.findOne({
+        where: {
+            id: id,
+        },
+    });
+
+    if (!user) {
+        return res.status(404).json({
+            message: "User not found",
+        });
+    }
+
+    const user2 = await UserModel.findOne({
+        where: {
+            contact: contact,
+        },
+    });
+
+    if (user2) {
+        return res.status(400).json({
+            message: "Contact number already exist",
+        });
+    }
+
+    if (contact.length != 9) {
+        return res.status(400).json({
+            message: "Contact number must have 9 digits",
+        });
+    }
+
+    await UserModel.update({
+        contact: contact,
+    }, {
+        where: {
+            id: id,
+        },
+    });
+
+    return res.status(200).json({
+        message: "Contact number updated",
+    });
+};
 
 // delete user by id
 export const deleteUser = async (req, res) => {
@@ -152,6 +199,12 @@ export const createUser = async (req, res) => {
     if (user3) {
         return res.status(400).json({
             message: "Contact already exist",
+        });
+    }
+
+    if (contact.length != 9) {
+        return res.status(400).json({
+            message: "Contact number must have 9 digits",
         });
     }
 
