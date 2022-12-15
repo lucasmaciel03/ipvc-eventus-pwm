@@ -14,6 +14,20 @@ export const getAllUsers = async (req, res) => {
     });
 };
 
+// get user by username
+export const getUserByUsername = async (req, res) => {
+    const { username } = req.params;
+
+    const user = await UserModel.findOne({
+        where: {
+            username: username,
+        },
+        attributes: {
+            exclude: ["password"],
+        },
+    });
+};
+
 // update username
 export const updateUsername = async (req, res) => {
     const { id } = req.params;
