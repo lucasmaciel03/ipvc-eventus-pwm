@@ -2,11 +2,12 @@ import Router from "express";
 import {
     createUser,
     getAllUsers,
+    getUserByUsername,
     deleteUser,
     updateUsername,
     updateNameSurname,
     updateContact,
-    updateEmail
+    updateEmail,
 } from "../controllers/users.js";
 
 const userRoutes = Router();
@@ -14,6 +15,8 @@ const userRoutes = Router();
 userRoutes.post("/createUser", createUser);
 
 userRoutes.get("/getAllUsers", getAllUsers);
+
+userRoutes.get("/getUserByUsername/:username", getUserByUsername);
 
 userRoutes.delete("/deleteUser/:id", deleteUser);
 
