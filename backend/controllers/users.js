@@ -1,7 +1,20 @@
 import bcrypt from 'bcrypt';
 import { UserModel } from "../models/users.js";
 
-// create user and crypt password, if username or email already exist, return error
+// get all users from table users, dont return password
+export const getAllUsers = async (req, res) => {
+    const users = await UserModel.findAll({
+        attributes: {
+            exclude: ["password"],
+        },
+    });
+
+    return res.status(200).json({
+        users,
+    });
+};
+
+// create user
 export const createUser = async (req, res) => {
     const { username, name, surname, email, contact, dateBirth, password } = req.body;
 
@@ -59,5 +72,3 @@ export const createUser = async (req, res) => {
         newUser,
     });
 };
-
-
