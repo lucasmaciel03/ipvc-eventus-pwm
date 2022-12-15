@@ -56,6 +56,38 @@ export const updateUsername = async (req, res) => {
     });
 };
 
+// update name and surname
+export const updateNameSurname = async (req, res) => {
+    const { id } = req.params;
+    const { name, surname } = req.body;
+
+    const user = await UserModel.findOne({
+        where: {
+            id: id,
+        },
+    });
+
+    if (!user) {
+        return res.status(404).json({
+            message: "User not found",
+        });
+    }
+
+    await UserModel.update({
+        name: name,
+        surname: surname,
+    }, {
+        where: {
+            id: id,
+        },
+    });
+
+    return res.status(200).json({
+        message: "Name and surname updated",
+    });
+};
+
+
 // delete user by id
 export const deleteUser = async (req, res) => {
     const { id } = req.params;

@@ -3,7 +3,8 @@ import {
     createUser,
     getAllUsers,
     deleteUser,
-    updateUsername
+    updateUsername,
+    updateNameSurname
 } from "../controllers/users.js";
 
 const userRoutes = Router();
@@ -15,6 +16,8 @@ userRoutes.get("/getAllUsers", getAllUsers);
 userRoutes.delete("/deleteUser/:id", deleteUser);
 
 userRoutes.put("/updateUsername/:id", updateUsername);
+
+userRoutes.put("/updateNameSurname/:id", updateNameSurname);
 
 
 export { userRoutes };
