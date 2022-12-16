@@ -5,7 +5,7 @@ import {
 
 const CategoryModel = dbInstance.define(
     "categories" /* table name */ , {
-        id: {
+        id_category: {
             type: Sequelize.INTEGER,
             autoIncrement: true,
             primaryKey: true,

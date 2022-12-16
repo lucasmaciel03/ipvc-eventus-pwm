@@ -14,7 +14,7 @@ const EventModel = dbInstance.define(
             type: Sequelize.INTEGER,
             references: {
                 model: "categories",
-                key: "id",
+                key: "id_category",
             },
         },
         name: {
