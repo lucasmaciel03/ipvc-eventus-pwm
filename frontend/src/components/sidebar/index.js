@@ -1,10 +1,16 @@
 import * as React from "react";
 import Style from "./index.css";
+import I from '@iconscout/react-unicons/icons/uil-react';
+import { UilCompass } from '@iconscout/react-unicons';
+import { UilHome } from '@iconscout/react-unicons';
+import { UilBell } from '@iconscout/react-unicons'
 
 
 const sidebar = () => {
   return (
     <>
+     <main>
+      <div class="container">
      <div class="left">
           <a class="profile">
             <div class="profile-photo">
@@ -17,17 +23,17 @@ const sidebar = () => {
           </a>
           <div class="sidebar">
             <a class="menu-item active">
-              <span><i class="uil uil-home"></i></span>
+              <span><img src={UilHome}></img></span>
               <h3>Home</h3>
             </a>
             <a class="menu-item">
-              <span><i class="uil uil-compass"></i></span>
+              <span><img src={UilCompass} ></img></span>
               <h3>Explore</h3>
             </a>
             <a class="menu-item" id="notifications">
               <span
-                ><i class="uil uil-bell"
-                  ><small class="notification-count">9+</small></i></span>
+                ><img src={UilBell}
+                  ></img></span>
               <h3>Notifications</h3>
               <div class="notifications-popup">
                 <div>
@@ -104,6 +110,8 @@ const sidebar = () => {
           </div>
           <label for="create-post" class="btn btn-primary">Create Post</label>
         </div>
+        </div>
+        </main>
     </>
   );
 };
